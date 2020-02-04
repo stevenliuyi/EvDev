@@ -26,6 +26,9 @@ RUN code -v --user-data-dir /root/.config/Code && \
 	sh parse-extension-list.sh && \
 	sh install-vscode-extensions.sh ../extensions.list
 
+# Julia
+FROM julia as julia
+
 # The production image for code-server
 FROM ubuntu:18.10
 MAINTAINER Everette Rong (https://rongyi.blog)
@@ -34,6 +37,7 @@ COPY --from=coder-binary /usr/local/bin/code-server /usr/local/bin/code-server
 RUN mkdir -p /root/.code-server/User
 COPY --from=vscode-env /root/settings.json /root/.code-server/User/settings.json
 COPY --from=vscode-env /root/.vscode/extensions /root/.code-server/extensions
+COPY --from=julia /usr/local/julia /root/julia
 COPY scripts /root/scripts
 
 RUN apt-get update && \
@@ -52,6 +56,7 @@ RUN sh /root/scripts/install-tools-dev.sh
 RUN sh /root/scripts/install-tools-cpp.sh
 RUN sh /root/scripts/install-tools-python.sh
 RUN sh /root/scripts/install-tools-latex.sh
+RUN sh /root/scripts/install-tools-julia.sh
 
 EXPOSE 8443
 CMD code-server $PWD
