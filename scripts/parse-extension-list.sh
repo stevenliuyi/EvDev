@@ -1,4 +1,4 @@
 #!/bin/bash
 
-jq -r ".[].metadata.publisherId" ../extensions.json > ../extensions.list
+jq -r '.[] | select(.publisher != "ms-vscode-remote").metadata.publisherId' ../extensions.json > ../extensions.list
 
