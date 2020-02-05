@@ -58,6 +58,7 @@ RUN sh /root/scripts/install-tools-cpp.sh
 RUN sh /root/scripts/install-tools-python.sh
 RUN sh /root/scripts/install-tools-latex.sh
 RUN sh /root/scripts/install-tools-julia.sh
+RUN sh /root/scripts/install-tools-fortran.sh
 
 EXPOSE 8443
 CMD code-server $PWD
