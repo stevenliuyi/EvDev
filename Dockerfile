@@ -36,6 +36,7 @@ WORKDIR /project
 COPY --from=coder-binary /usr/local/bin/code-server /usr/local/bin/code-server
 RUN mkdir -p /root/.code-server/User
 COPY --from=vscode-env /root/settings.json /root/.code-server/User/settings.json
+COPY --from=vscode-env /root/snippets/*.json /root/.code-server/User/snippets/
 COPY --from=vscode-env /root/.vscode/extensions /root/.code-server/extensions
 COPY --from=julia /usr/local/julia /root/julia
 COPY scripts /root/scripts
